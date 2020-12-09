@@ -3,7 +3,7 @@ const current_branch = `$(git ${WHEREAMI})`;
 const what_the_commit = 'git commit -m "$(curl -s whatthecommit.com/index.txt)"';
 const repository = '$(git remote get-url origin)';
 
-module.exports = [
+module.exports = ({ base = 'master' } = {}) => [
 	{
 		key: 's',
 		desc: 'Short status with branch name',
@@ -32,17 +32,17 @@ module.exports = [
 	{
 		key: 'sum',
 		desc: 'Generate a summary of pending changes',
-		value: `!f() { git request-pull $\{1:-"master"} ${repository} ${current_branch}; }; f`,
+		value: `!f() { git request-pull $\{1:-"${base}"} ${repository} ${current_branch}; }; f`,
 	},
 	{
 		key: 'trash',
-		desc: 'Move to master and delete current local branch',
-		value: `!f() { local current_branch=${current_branch} && git checkout master && git branch -D $current_branch; };f`,
+		desc: `Move to "${base}" and delete current local branch`,
+		value: `!f() { local current_branch=${current_branch} && git checkout ${base} && git branch -D $current_branch; };f`,
 	},
 	{
 		key: 'merged',
-		desc: 'After remote merge, trash current branch and pull from master',
-		value: `!f() { local current_branch=$(git ${WHEREAMI}) && git checkout master && git branch -D $current_branch; git push origin :$current_branch; git pull origin master; };f`,
+		desc: `After remote merge, trash current branch and pull from "${base}"`,
+		value: `!f() { local current_branch=$(git ${WHEREAMI}) && git checkout ${base} && git branch -D $current_branch; git push origin :$current_branch; git pull origin ${base}; };f`,
 	},
 	{
 		key: 'l',
@@ -62,7 +62,7 @@ module.exports = [
 	{
 		key: 'get',
 		desc: 'start a repo by remote URL',
-		value: '!f() { git init; git remote add origin $1; git pull origin master; }; f',
+		value: `!f() { git init; git remote add origin $1; git pull origin ${base}; }; f`,
 	},
 	{
 		key: 'from',
@@ -91,8 +91,8 @@ module.exports = [
 	},
 	{
 		key: 'far',
-		desc: 'fetch from remote master and rebase',
-		value: '!f() { git checkout master && git pull origin master && git checkout - && git rebase master; }; f',
+		desc: `fetch from remote "${base}" and rebase`,
+		value: `!f() { git checkout ${base} && git pull origin ${base} && git checkout - && git rebase ${base}; }; f`,
 	},
 	{
 		key: 'back',

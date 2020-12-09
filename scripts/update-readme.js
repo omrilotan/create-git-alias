@@ -24,7 +24,7 @@ const TITLE = '## aliases';
 			'',
 			'| alias | Description',
 			'| - | -',
-			...sortby(aliases, 'key').map(({key, desc}) => `| ${key} | ${desc}`),
+			...sortby(aliases({ base: '<BASE_BRANCH>' }), 'key').map(({key, desc}) => `| ${key} | ${desc}`),
 			'',
 		].join('\n'),
 	);
