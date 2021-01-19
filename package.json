@@ -1,6 +1,6 @@
 {
   "name": "create-git-alias",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "👨🏻 `npm create git-alias` - interactively apply useful git aliases",
   "keywords": [
     "git",
@@ -11,7 +11,7 @@
     "👨🏻"
   ],
   "author": "omrilotan",
-  "license": "MIT",
+  "license": "Unlicense",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/omrilotan/create-git-alias.git"

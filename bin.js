@@ -95,6 +95,7 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 		);
 
 	const message = ['Which git aliases would you like me to set for you?'];
+	base === undefined && message.push(` * We have the default base branch set as "master". To use a different branch use --base option`.dim);
 	hazard && message.push('[☠️ ] marks an alias you have with a different value'.dim);
 	match && message.push('[🎀️ ] marks an alias you have with the same value'.dim);
 	message.push('\t');
