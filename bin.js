@@ -100,10 +100,10 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 	match && message.push('[🎀️ ] marks an alias you have with the same value'.dim);
 	message.push('\t');
 
-	const answers = await prompt(
+	const { selected } = await prompt(
 		[
 			{
-				name: 'aliases',
+				name: 'selected',
 				message: message.join('\n'),
 				type: 'checkbox',
 				pageSize: '20',
@@ -112,19 +112,19 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 		]
 	);
 
-	const selected = [...answers.list];
+	const clone = [...selected];
 
-	while (answers.list.length) {
-		const [key, value] = answers.list.shift();
+	while (selected.length) {
+		const [key, value] = selected.shift();
 		await execute(`git config --global alias.${key} '${value}'`);
 	}
 
-	switch (selected.length) {
+	switch (clone.length) {
 		case 0:
 			return 'I\'ve set up no aliases for you today 😕';
 		case 1:
-			return `I've set up the alias "${selected[0][0].bold}" for you 😉`;
+			return `I've set up the alias "${clone[0][0].bold}" for you 😉`;
 		default:
-			return `I've set up these aliases for you: ${selected.map(([key]) => `"${key.bold}"`).join(', ')} 😃`;
+			return `I've set up these aliases for you: ${clone.map(([key]) => `"${key.bold}"`).join(', ')} 😃`;
 	}
 }
