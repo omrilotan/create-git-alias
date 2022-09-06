@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.1
+
+- [TPYO] Fix variable interpolation in description
+
 ## 1.5.0
 
 - Allow to specify the main branch name in relevant scripts (usually defaults to defined base or "master")

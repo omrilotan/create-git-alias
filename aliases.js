@@ -36,12 +36,12 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'trash',
-		desc: `Move to "${base}" and delete current local branch (1st argument[optional] can change the base branch)`,
+		desc: `Move to ["${base}" or 1st argument] and delete current local branch`,
 		value: `!f() { local current_branch=${current_branch} && git checkout $\{1:-"${base}"} && git branch -D $current_branch; };f`,
 	},
 	{
 		key: 'merged',
-		desc: `After remote merge, trash current branch and pull from "${base}" (1st argument[optional] can change the base branch)`,
+		desc: `After remote merge, trash current branch and pull from ["${base}" or 1st argument]`,
 		value: `!f() { local current_branch=$(git ${WHEREAMI}) && git checkout $\{1:-"${base}"} && git branch -D $current_branch; git push origin :$current_branch; git pull origin $\{1:-"${base}"}; };f`,
 	},
 	{
@@ -61,7 +61,7 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'get',
-		desc: 'start a repo by remote URL with branch "${base}" or second argument (1st argument is the repositoiry, 2nd argument[optional] is the branch to use)',
+		desc: `start a repo by remote URL (1st argument) with branch ["${base}" or 2nd argument]`,
 		value: `!f() { git init; git remote add origin $1; git pull origin $\{2:-"${base}"; }; f`,
 	},
 	{
@@ -91,7 +91,7 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'far',
-		desc: `fetch from remote "${base}" or first argument and rebase (1st argument[optional] can change the base branch)`,
+		desc: `fetch from remote ["${base}" or 1st argument] and rebase`,
 		value: `!f() { git checkout $\{1:-"${base}"} && git pull origin $\{1:-"${base}"} && git checkout - && git rebase $\{1:-"${base}"}; }; f`,
 	},
 	{
