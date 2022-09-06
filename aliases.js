@@ -31,18 +31,18 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'sum',
-		desc: 'Generate a summary of pending changes',
+		desc: 'Generate a summary of pending changes (1st argument[optional] can change the base branch)',
 		value: `!f() { git request-pull $\{1:-"${base}"} ${repository} ${current_branch}; }; f`,
 	},
 	{
 		key: 'trash',
-		desc: `Move to "${base}" and delete current local branch`,
-		value: `!f() { local current_branch=${current_branch} && git checkout ${base} && git branch -D $current_branch; };f`,
+		desc: `Move to "${base}" and delete current local branch (1st argument[optional] can change the base branch)`,
+		value: `!f() { local current_branch=${current_branch} && git checkout $\{1:-"${base}"} && git branch -D $current_branch; };f`,
 	},
 	{
 		key: 'merged',
-		desc: `After remote merge, trash current branch and pull from "${base}"`,
-		value: `!f() { local current_branch=$(git ${WHEREAMI}) && git checkout ${base} && git branch -D $current_branch; git push origin :$current_branch; git pull origin ${base}; };f`,
+		desc: `After remote merge, trash current branch and pull from "${base}" (1st argument[optional] can change the base branch)`,
+		value: `!f() { local current_branch=$(git ${WHEREAMI}) && git checkout $\{1:-"${base}"} && git branch -D $current_branch; git push origin :$current_branch; git pull origin $\{1:-"${base}"}; };f`,
 	},
 	{
 		key: 'l',
@@ -61,8 +61,8 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'get',
-		desc: 'start a repo by remote URL',
-		value: `!f() { git init; git remote add origin $1; git pull origin ${base}; }; f`,
+		desc: 'start a repo by remote URL with branch "${base}" or second argument (1st argument is the repositoiry, 2nd argument[optional] is the branch to use)',
+		value: `!f() { git init; git remote add origin $1; git pull origin $\{2:-"${base}"; }; f`,
 	},
 	{
 		key: 'from',
@@ -91,8 +91,8 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'far',
-		desc: `fetch from remote "${base}" and rebase`,
-		value: `!f() { git checkout ${base} && git pull origin ${base} && git checkout - && git rebase ${base}; }; f`,
+		desc: `fetch from remote "${base}" or first argument and rebase (1st argument[optional] can change the base branch)`,
+		value: `!f() { git checkout $\{1:-"${base}"} && git pull origin $\{1:-"${base}"} && git checkout - && git rebase $\{1:-"${base}"}; }; f`,
 	},
 	{
 		key: 'back',

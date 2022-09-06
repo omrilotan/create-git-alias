@@ -27,21 +27,21 @@ Base branch for scripts doing rebase and deleting current branches. Defaults to 
 | - | -
 | aliases | print all git aliases
 | back | Reset to previous commit
-| far | fetch from remote "<BASE_BRANCH>" and rebase
+| far | fetch from remote "<BASE_BRANCH>" or first argument and rebase (1st argument[optional] can change the base branch)
 | feature | Create a branch starting with today's date
 | fix | add, amend the current commit and push some fixes
 | from | how many commit since <commit id>
-| get | start a repo by remote URL
+| get | start a repo by remote URL with branch "${base}" or second argument (1st argument is the repositoiry, 2nd argument[optional] is the branch to use)
 | l | pretty log
 | mend | commit amend with no edits
-| merged | After remote merge, trash current branch and pull from "<BASE_BRANCH>"
+| merged | After remote merge, trash current branch and pull from "<BASE_BRANCH>" (1st argument[optional] can change the base branch)
 | please | git push <this_branch> --force-with-lease
 | pruner | prune aggressive
 | purge | remove local and remote branches (accepts many)
 | root | Change directory to repository root
 | s | Short status with branch name
-| sum | Generate a summary of pending changes
-| trash | Move to "<BASE_BRANCH>" and delete current local branch
+| sum | Generate a summary of pending changes (1st argument[optional] can change the base branch)
+| trash | Move to "<BASE_BRANCH>" and delete current local branch (1st argument[optional] can change the base branch)
 | whereami | What branch am I on?
 | wip | add everything, commit with a random commit message and push to remote origin
 | yolo | a commit with a random commit message from whatthecommit
