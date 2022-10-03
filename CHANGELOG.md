@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0
+
+- Add "git last" - Show diff of last \<N> commits (defaults to 1)
+
 ## 1.5.1
 
 - [TPYO] Fix variable interpolation in description
