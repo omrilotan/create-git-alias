@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+
+- Fix whatthecommit URL (now SSL only)
+
 ## 1.6.0
 
 - Add "git last" - Show diff of last \<N> commits (defaults to 1)

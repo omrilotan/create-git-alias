@@ -1,6 +1,7 @@
 const WHEREAMI = 'rev-parse --abbrev-ref HEAD';
 const current_branch = `$(git ${WHEREAMI})`;
-const what_the_commit = 'git commit -m "$(curl -s whatthecommit.com/index.txt)"';
+const what_the_commit_message = '"$(curl -s https://whatthecommit.com/index.txt)"';
+const what_the_commit = `git commit -m ${what_the_commit_message}`;
 const repository = '$(git remote get-url origin)';
 
 module.exports = ({ base = 'master' } = {}) => [
@@ -107,6 +108,6 @@ module.exports = ({ base = 'master' } = {}) => [
 	{
 		key: 'yolt',
 		desc: 'amend commit with a random commit message from whatthecommit',
-		value: '!f() { git commit --amend -m "$(curl -s whatthecommit.com/index.txt)"; }; f',
+		value: `!f() { git commit --amend -m ${what_the_commit_message}; }; f`,
 	}
 ];
