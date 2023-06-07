@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0
+
+- Add "git branches" - Verbose, sorted list of branches
+
 ## 1.6.1
 
 - Fix whatthecommit URL (now SSL only)

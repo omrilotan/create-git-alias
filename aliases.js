@@ -16,6 +16,11 @@ module.exports = ({ base = 'master' } = {}) => [
 		value: 'reset HEAD^',
 	},
 	{
+		key: 'branches',
+		desc: 'Verbose, sorted list of branches',
+		value: 'branch -avv --sort=-committerdate',
+	},
+	{
 		key: 'far',
 		desc: `fetch from remote ["${base}" or 1st argument] and rebase`,
 		value: `!f() { git checkout $\{1:-"${base}"} && git pull origin $\{1:-"${base}"} && git checkout - && git rebase $\{1:-"${base}"}; }; f`,

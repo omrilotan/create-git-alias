@@ -27,6 +27,7 @@ Base branch for scripts doing rebase and deleting current branches. Defaults to 
 | - | -
 | aliases | print all git aliases
 | back | Reset to previous commit
+| branches | Verbose, sorted list of branches
 | far | fetch from remote ["\<BASE_BRANCH>" or 1st argument] and rebase
 | feature | Create a branch starting with today's date
 | fix | add, amend the current commit and push some fixes
