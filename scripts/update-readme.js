@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
-const {
-	readFile,
-	writeFile,
-} = require('fs').promises;
-const {join} = require('path');
-const sortby = require('@does/sortby');
-const aliases = require('../aliases');
+import { readFile, writeFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import sortby from '@does/sortby';
+import { aliases } from '../aliases.js';
 
 const TITLE = '## aliases';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 (async () => {
 	const file = join(__dirname, '../README.md');

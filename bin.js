@@ -1,29 +1,40 @@
 #!/usr/bin/env node
 
-process.on('unhandledRejection', console.error);
+import inquirer from 'inquirer';
+import { parseArgs } from 'node:util';
+import { execute } from "async-execute";
+import chalk from 'chalk';
+import { aliases } from './aliases.js';
 
-const { prompt } = require('inquirer');
-const parse = require('yargs-parser');
-const execute = require('async-execute');
-require('colors');
-const aliases = require('./aliases');
-
-const OPTION_SHOW_ALL = ['all', 'show-all'];
-const [, , ...argv] = process.argv;
-
-const {
-	base,
-	help,
-	showAll
-} = parse(argv, {
-	alias: {
-		showAll: [ 'all', 'a' ],
-		base: [ 'base', 'b' ],
-		help: [ 'help', 'h' ]
-	}
+const { prompt } = inquirer;
+const { values } = parseArgs({
+	args: process.argv.slice(2),
+	allowPositionals: true,
+	strict: false,
+	options: {
+		all: { type: 'boolean', short: 'a' },
+		base: { type: 'string', short: 'b' },
+		help: { type: 'boolean', short: 'h' },
+		'dry-run': { type: 'boolean', short: 'd' },
+		'show-all': { type: 'boolean' },
+	},
 });
 
-app().then(console.log);
+const base = values.base;
+const help = Boolean(values.help);
+const dryRun = Boolean(values['dry-run']);
+const showAll = Boolean(values.all || values['show-all']);
+
+app()
+	.then((message) => {
+		if (message) {
+			console.log(message);
+		}
+	})
+	.catch((error) => {
+		console.error(error);
+		process.exitCode = 1;
+	});
 
 async function app() {
 	if (help) {
@@ -32,6 +43,9 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 ▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
   --all, -a
     Show all choices - even ones that are identical to the ones I have
+
+	--dry-run, -d
+		Print the aliases that would be configured without changing git config
 
   --base <BASE_BRANCH>, -b <BASE_BRANCH>
     Base branch for scripts doing rebase and deleting current branches. Defaults to "master"
@@ -87,7 +101,7 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 	const choices = list
 		.map(
 			({key, desc, value, disabled}) => ({
-				name: `${key.yellow.bold}: ${desc}`,
+				name: `${chalk.yellow.bold(key)}: ${desc}`,
 				value: [key, value],
 				checked: false,
 				disabled,
@@ -95,9 +109,9 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 		);
 
 	const message = ['Which git aliases would you like me to set for you?'];
-	base === undefined && message.push(` * We have the default base branch set as "master". To use a different branch use --base option`.dim);
-	hazard && message.push('[☠️ ] marks an alias you have with a different value'.dim);
-	match && message.push('[🎀️ ] marks an alias you have with the same value'.dim);
+	base === undefined && message.push(chalk.dim(' * We have the default base branch set as "master". To use a different branch use --base option'));
+	hazard && message.push(chalk.dim('[☠️ ] marks an alias you have with a different value'));
+	match && message.push(chalk.dim('[🎀️ ] marks an alias you have with the same value'));
 	message.push('\t');
 
 	const { selected } = await prompt(
@@ -116,6 +130,10 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 
 	while (selected.length) {
 		const [key, value] = selected.shift();
+		if (dryRun) {
+			console.log(chalk.blue(`[Dry Run]`) + chalk.yellow.bold(key) + ': ' + value);
+			continue;
+		}
 		await execute(`git config --global alias.${key} '${value}'`);
 	}
 
@@ -123,8 +141,8 @@ npm create git-alias [--base <BASE_BRANCH>] [--all] [--help]
 		case 0:
 			return 'I\'ve set up no aliases for you today 😕';
 		case 1:
-			return `I've set up the alias "${clone[0][0].bold}" for you 😉`;
+			return `I've set up the alias "${chalk.bold(clone[0][0])}" for you 😉`;
 		default:
-			return `I've set up these aliases for you: ${clone.map(([key]) => `"${key.bold}"`).join(', ')} 😃`;
+			return `I've set up these aliases for you: ${clone.map(([key]) => `"${chalk.bold(key)}"`).join(', ')} 😃`;
 	}
 }

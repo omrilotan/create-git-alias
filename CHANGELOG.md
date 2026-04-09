@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+- [Breaking Change] Modernisation of the codebase, dropping support for old Node versions
+- [Change] "git root" was supposed to change the directory to the repository root but never worked. Instead, it now prints the repository root path. If you want to change directory to the repository root, you can use "cd $(git root)".
+- [Add] --dry-run option to show what would be done without actually setting the aliases
+
 ## 1.7.0
 
 - Add "git branches" - Verbose, sorted list of branches

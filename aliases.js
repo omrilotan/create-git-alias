@@ -4,7 +4,7 @@ const what_the_commit_message = '"$(curl -s https://whatthecommit.com/index.txt)
 const what_the_commit = `git commit -m ${what_the_commit_message}`;
 const repository = '$(git remote get-url origin)';
 
-module.exports = ({ base = 'master' } = {}) => [
+export const aliases = ({ base = 'master' } = {}) => [
 	{
 		key: 'aliases',
 		desc: 'print all git aliases',
@@ -37,7 +37,7 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'from',
-		desc: 'how many commit since <commit id>',
+		desc: 'how many commit since <COMMIT_ID>',
 		value: '!f() { git rev-list --count HEAD ^"$@"; }; f',
 	},
 	{
@@ -67,7 +67,7 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'please',
-		desc: 'git push <this_branch> --force-with-lease',
+		desc: 'git push <THIS_BRANCH> --force-with-lease',
 		value: `!f() { git push origin ${current_branch} --force-with-lease; }; f`,
 	},
 	{
@@ -77,8 +77,8 @@ module.exports = ({ base = 'master' } = {}) => [
 	},
 	{
 		key: 'root',
-		desc: 'Change directory to repository root',
-		value: '!f() { cd $(git rev-parse --show-toplevel); }; f'
+		desc: 'Print repository root path. Example use: "cd $(git root)"',
+		value: 'rev-parse --show-toplevel'
 	},
 	{
 		key: 's',
