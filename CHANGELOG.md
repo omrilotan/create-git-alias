@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- Add "git ref" - Sorted by date list of refs (branches) with the last commit message
+
 ## 2.0.0
 
 - [Breaking Change] Modernisation of the codebase, dropping support for old Node versions

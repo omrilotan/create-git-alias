@@ -76,6 +76,11 @@ export const aliases = ({ base = 'master' } = {}) => [
 		value: 'git gc --prune=now --aggressive',
 	},
 	{
+		key: 'ref',
+		desc: 'Sorted by date list of refs (branches) with the last commit message',
+		value: 'for-each-ref --sort=-committerdate --format="%(if)%(HEAD)%(then)→ %(else)  %(end)%(color:bold yellow)%(refname:short)%(color:reset) (%(committerdate:relative)): %(subject)" refs/heads refs/remotes',
+	},
+	{
 		key: 'root',
 		desc: 'Print repository root path. Example use: "cd $(git root)"',
 		value: 'rev-parse --show-toplevel'

@@ -38,6 +38,7 @@ Base branch for scripts doing rebase and deleting current branches. Defaults to 
 | merged | After remote merge, trash current branch and pull from ["<BASE_BRANCH>" or 1st argument]
 | please | git push <this_branch> --force-with-lease
 | pruner | prune aggressive
+| ref | Sorted by date list of refs (branches) with the last commit message
 | root | Print repository root path. Example use: "cd $(git root)"
 | s | Short status with branch name
 | sum | Generate a summary of pending changes (1st argument[optional] can change the base branch)
