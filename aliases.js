@@ -101,6 +101,11 @@ export const aliases = ({ base = 'master' } = {}) => [
 		value: `!f() { local current_branch=${current_branch} && git checkout $\{1:-"${base}"} && git branch -D $current_branch; };f`,
 	},
 	{
+		key: 'web',
+		desc: 'Open the current branch in the browser',
+		value: `!f() { local remote branch url slash="/"; remote="$(git config --get remote.origin.url 2>/dev/null)"; if [ -z "$remote" ]; then echo "Not a git repo (or no 'origin' remote)"; return 1; fi; branch="$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)"; case "$remote" in https://*|http://*) url="$remote" ;; ssh://*) url="\${remote#ssh://}"; url="\${url#git@}"; url="https://\${url}" ;; *) url="\${remote#git@}"; url="\${url/:/$slash}"; url="https://\${url}" ;; esac; url="\${url%.git}"; case "$url" in *gitlab*) url="\${url}/-/tree/\${branch}" ;; *bitbucket*) url="\${url}/src/\${branch}" ;; *) url="\${url}/tree/\${branch}" ;; esac; echo "Opening \${url}"; open "$url"; }; f`,
+	},
+	{
 		key: 'whereami',
 		desc: 'What branch am I on?',
 		value: WHEREAMI,

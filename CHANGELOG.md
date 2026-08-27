@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- Add "git web" - Open the current branch in the browser
+
 ## 2.1.0
 
 - Add "git ref" - Sorted by date list of refs (branches) with the last commit message
